@@ -28,9 +28,9 @@ function checkEmail(email) {
  **/
 exports.push = function(params, cb) {
     mail.send({
-        to: params.to,
-        from: params.from,
-        sender: params.sender,
+        to: params.to ? params.to : pkg.mime,
+        from: params.from ? params.from : pkg.sender.email,
+        sender: params.sender ? params.sender : pkg.sender,
         files: params.files
     }, function(stat) {
         cb(stat)
