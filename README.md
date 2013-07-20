@@ -76,6 +76,11 @@ kindle.config('mime',{
     email: 'my@my.com'
 });
 
+// 如果已经配置了常用邮箱，可以直接这样触发发送
+kindle.push({
+    files: ['./my_code.txt'] // 需要发送的文件
+});
+
 ````
 
 ### 反馈与建议
