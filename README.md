@@ -18,12 +18,17 @@ kindle mail-pusher based on node-pdf && nodemailer
 ````
 $ kindle -s yourEmail@yourDomain.com file.txt // 将file.txt 发送到你的kindle邮箱
 
-// 支持的文件格式有
-.txt
-.pdf
-.js
-.css
-.jpg/png/gif
+// 支持的文件格式是，所有kindle.cn官方支持的文件格式如下：
+Microsoft Word (.doc, .docx) 
+RTF文件(.rtf) 
+HTML(.htm, .html)
+TXT文件(.txt) 
+Zip, x-zip压缩文件
+Mobi格式电子书 
+
+JPEG (.jpg), GIF (.gif), Bitmap (.bmp) 和 PNG (.png) 格式的图片。
+Adobe PDF (.pdf)文档可维持原文件格式，发送至您的Kindle。
+
 
 ````
 ### 设置常用被推送的邮箱

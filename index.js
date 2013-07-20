@@ -13,7 +13,6 @@ var pkg = require('./pkg').fetch(),
     mail = require('./lib/mail');
 
 // 校验是不是邮箱
-
 function checkEmail(email) {
     var re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return re.test(email);
@@ -52,7 +51,7 @@ exports.config = function(type, params) {
  **/
 exports.cli = function() {
 
-    console.log(argv);
+    // console.log(argv);
     var to = '';
     var argument = argv._;
 
@@ -91,8 +90,11 @@ exports.cli = function() {
                 return false;
             }
         } else {
-            if (pkg.mime) {
+            if (pkg.mime != 'false') {
                 to = pkg.mime.toString()
+            } else {
+                console.log(color.red('抱歉，你好像没有指定kindle邮箱地址，请使用 -s 或者 -m 设置常用地址'))
+                return false;
             }
         }
 
@@ -105,7 +107,7 @@ exports.cli = function() {
                     files: argument
                 }, function(result) {
                     if (result.stat != 'error') {
-                        console.log(color.green('恭喜，' + argument.length[0] + '等 ' + argument.length + ' 个文件已成功推送到kindle!'));
+                        console.log(color.green('恭喜，' + argument[0] + '等 ' + argument.length + ' 个文件已成功推送到kindle!'));
                     } else {
                         console.log(color.red('发送失败...失败详情如下'))
                         console.log(result.error);
