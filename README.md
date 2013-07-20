@@ -15,14 +15,24 @@ kindle mail-pusher based on node-pdf && nodemailer
 首先，将你的亚马逊账户中将kindle推送的邮箱设置成可信的。这个小工具默认的发件邮箱是这个：kindle@menkr.com
 
 ````
-$ kindle -s yourEmail@yourDomain.com // 发送到你的kindle邮箱
+$ kindle -s yourEmail@yourDomain.com file.txt // 将file.txt 发送到你的kindle邮箱
+
+// 支持的文件格式有
+
+.txt
+.pdf
+.js
+.css
+.jpg/png/gif
+
 ````
 ### 设置常用被推送的邮箱
 
 如果你懒得每次都输入`-s`这样蛋疼的命令的话，一个明智的选择是提前设置好你的kindle的邮箱地址。
 
 ````
-$ kindle -k mime@free.kindle.cn // mime是你自己的邮箱前缀
+$ kindle -m mime@free.kindle.cn // mime是你自己的邮箱前缀
+$ kindle demo.txt // 然后就可以直接发送了
 ````
 
 ### 设置自己的推送邮箱
@@ -32,8 +42,7 @@ $ kindle -k mime@free.kindle.cn // mime是你自己的邮箱前缀
 按照如下的方式设置自己的邮箱去推送，设置完之后别忘了将你自己的邮箱加入亚马逊的信任列表哦~
 
 ````
-$ kindle --email my@my.com // 设置自己的邮箱账户
-$ kindle --password 123131212 // 设置自己的邮箱密码
+$ kindle --sender my@my.com 123456123 // 设置自己的邮箱账户和密码
 ````
 ### 在node程序中使用
 
@@ -43,16 +52,23 @@ var kindle = require('kindle');
 // 直接发送
 kindle.push({
     to: 'abc@abc.com',
-    file: './my_code.txt' // 需要发送的文件
+    from: 'a@b.com',
+    sender: {
+        email: 'xxx',
+        password: 'xxx'
+    },
+    files: ['./my_code.txt'] // 需要发送的文件
 });
 
-// 配置发送邮箱或接受邮箱
-kindle.config({
-    send: 'abc@abc.com',
-    from: {
-        email: 'my@my.com',
-        password: '123123123'
-    }
+// 配置发送邮箱
+kindle.config('sender',{
+    email: 'my@my.com',
+    password: '123123123'
+});
+
+// 配置接收邮箱
+kindle.config('mime',{
+    email: 'my@my.com'
 });
 
 ````
