@@ -6,7 +6,7 @@
  *
  **/
 
-var pkg = require('./pkg').fetch(),
+var pkg = require('./pkg').fetch().kindle,
     optimist = require('optimist'),
     argv = optimist.argv,
     color = require('colorful'),
@@ -39,8 +39,8 @@ exports.push = function(params, cb) {
 
 // 设置发件邮箱或者接收邮箱
 exports.config = function(type, params) {
-    var p = pkg;
-    p[type] = params;
+    var p = require('./pkg').fetch();
+    p.kindle[type] = params;
     require('./pkg').set(p);
     return p;
 }

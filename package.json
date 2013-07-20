@@ -1,6 +1,6 @@
 {
   "name": "kindle",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a mail-pusher for kindle based on node",
   "main": "index.js",
   "scripts": {
@@ -27,5 +27,8 @@
     "nodemailer": "*",
     "request": "*",
     "optimist": "*"
+  },
+  "kindle": {
+    "mime": "false"
   }
 }

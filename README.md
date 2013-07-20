@@ -8,7 +8,7 @@ kindle mail-pusher based on node-pdf && nodemailer
 
 ### 如何安装
 
-`npm install kindle` 
+`$ sudo npm install kindle -g` 
 
 ### 如何使用
 
@@ -26,10 +26,13 @@ TXT文件(.txt)
 Zip, x-zip压缩文件
 Mobi格式电子书 
 
+// 除了亚马逊官方支持的格式以外，我还在开发这些后缀的支持：
+.md
+.js
+.css
+
 JPEG (.jpg), GIF (.gif), Bitmap (.bmp) 和 PNG (.png) 格式的图片。
 Adobe PDF (.pdf)文档可维持原文件格式，发送至您的Kindle。
-
-
 ````
 ### 设置常用被推送的邮箱
 
@@ -84,7 +87,6 @@ kindle.push({
 },function(result){
     // do sth
 });
-
 ````
 
 ### 反馈与建议
