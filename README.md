@@ -63,6 +63,8 @@ kindle.push({
         password: 'xxx'
     },
     files: ['./my_code.txt'] // 需要发送的文件
+},function(result){
+    // do sth
 });
 
 // 配置发送邮箱
@@ -79,6 +81,8 @@ kindle.config('mime',{
 // 如果已经配置了常用邮箱，可以直接这样触发发送
 kindle.push({
     files: ['./my_code.txt'] // 需要发送的文件
+},function(result){
+    // do sth
 });
 
 ````
