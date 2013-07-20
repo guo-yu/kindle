@@ -1,7 +1,7 @@
 {
   "name": "kindle",
   "version": "0.0.1",
-  "description": "a spider/mail-pusher for kindle based on node",
+  "description": "a mail-pusher for kindle based on node",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
