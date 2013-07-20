@@ -1,0 +1,30 @@
+{
+  "name": "kindle",
+  "version": "0.0.1",
+  "description": "a spider/mail-pusher for kindle based on node",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turingou/kindle"
+  },
+  "keywords": [
+      "kindle",
+      "mail"
+  ],
+  "author": "turingou",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/turingou/kindle/issues"
+  },
+  "bin": {
+    "kindle": "./bin/cli"
+  },
+  "dependencies": {
+    "colorful": "*",
+    "nodemailer": "*",
+    "request": "*"
+  }
+}
