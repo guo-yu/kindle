@@ -6,7 +6,7 @@
  *
  **/
 
-var pkg = require('./pkg').fetch().kindle,
+var pkg = require('./pkg').fetch(),
     optimist = require('optimist'),
     argv = optimist.argv,
     color = require('colorful'),
@@ -39,8 +39,8 @@ exports.push = function(params, cb) {
 
 // 设置发件邮箱或者接收邮箱
 exports.config = function(type, params) {
-    var p = require('./pkg').fetch();
-    p.kindle[type] = params;
+    var p = pkg;
+    p[type] = params;
     require('./pkg').set(p);
     return p;
 }
@@ -100,14 +100,19 @@ exports.cli = function() {
 
         if (argument.length > 0) {
             if (pkg.sender && typeof(pkg.sender) == 'object') {
+                console.log(color.yellow('文件发送中...'));
+                var clock = setTimeout(function(){
+                    console.log(color.green('...'))
+                },100);
                 exports.push({
                     to: to,
                     from: pkg.sender.email,
                     sender: pkg.sender,
                     files: argument
                 }, function(result) {
+                    clearTimeout(clock);
                     if (result.stat != 'error') {
-                        console.log(color.green('恭喜，' + argument[0] + '等 ' + argument.length + ' 个文件已成功推送到kindle!'));
+                        console.log(color.green('恭喜，' + argument[0] + ' 等 ' + argument.length + ' 个文件已成功推送到您的 kindle !'));
                     } else {
                         console.log(color.red('发送失败...失败详情如下'))
                         console.log(result.error);

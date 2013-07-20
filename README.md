@@ -2,7 +2,7 @@
 
 kindle mail-pusher based on node-pdf && nodemailer
 
-是不是很烦有的时候你想安安静静地在kindle上看点儿东西（比如代码）。但又被页面上浮躁的花花绿绿的东西所影响？这个小工具就为了这个目的而设计，你可以使用命令行把txt文件，js文件或者其他的文本文件，图像发送到你的kindle。一行命令，就是这么简单。
+有的时候，想安安静静地在kindle上看点儿东西（比如临时性的图片或者文字片段）。但又被页面上浮躁的花花绿绿的东西所影响？这个小工具就为了这个目的而设计，你可以使用命令行把txt文件，doc，html，zip，pdf或者其他的文本文件，图像发送到你的kindle。一行命令，就是这么简单。
 
 当然，你也可以在自己的node程序中 `require('kindle')` 随心所欲构建自己想要的阅读环境。
 
@@ -12,7 +12,7 @@ kindle mail-pusher based on node-pdf && nodemailer
 
 ### 如何使用
 
-首先，使用 `kindle --sender` 配置自己的推送邮箱，使用SMTP服务。
+首先，使用 `sudo kindle --sender` 配置自己的推送邮箱，使用SMTP服务。
 然后，将你的亚马逊账户中将kindle推送的邮箱设置成可信的。
 
 ````
@@ -25,21 +25,20 @@ HTML(.htm, .html)
 TXT文件(.txt) 
 Zip, x-zip压缩文件
 Mobi格式电子书 
+JPEG (.jpg), GIF (.gif), Bitmap (.bmp) 和 PNG (.png) 格式的图片。
+Adobe PDF (.pdf)文档可维持原文件格式，发送至您的Kindle。
 
 // 除了亚马逊官方支持的格式以外，我还在开发这些后缀的支持：
 .md
 .js
 .css
-
-JPEG (.jpg), GIF (.gif), Bitmap (.bmp) 和 PNG (.png) 格式的图片。
-Adobe PDF (.pdf)文档可维持原文件格式，发送至您的Kindle。
 ````
 ### 设置常用被推送的邮箱
 
 如果你懒得每次都输入`-s`这样蛋疼的命令的话，一个明智的选择是提前设置好你的kindle的邮箱地址。
 
 ````
-$ kindle -m mime@free.kindle.cn // mime是你自己的邮箱前缀
+$ sudo kindle -m mime@free.kindle.cn // mime是你自己的邮箱前缀
 $ kindle demo.txt // 然后就可以直接发送了
 ````
 
@@ -50,7 +49,7 @@ $ kindle demo.txt // 然后就可以直接发送了
 按照如下的方式设置自己的邮箱去推送，设置完之后别忘了将你自己的邮箱加入亚马逊的信任列表哦~
 
 ````
-$ kindle --sender my@my.com 123456123 // 设置自己的邮箱账户和密码
+$ sudo kindle --sender my@my.com 123456123 // 设置自己的邮箱账户和密码
 ````
 ### 在node程序中使用
 
