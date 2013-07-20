@@ -12,13 +12,13 @@ kindle mail-pusher based on node-pdf && nodemailer
 
 ### 如何使用
 
-首先，将你的亚马逊账户中将kindle推送的邮箱设置成可信的。这个小工具默认的发件邮箱是这个：kindle@menkr.com
+首先，使用 `kindle --sender` 配置自己的推送邮箱，使用SMTP服务。
+然后，将你的亚马逊账户中将kindle推送的邮箱设置成可信的。
 
 ````
 $ kindle -s yourEmail@yourDomain.com file.txt // 将file.txt 发送到你的kindle邮箱
 
 // 支持的文件格式有
-
 .txt
 .pdf
 .js
