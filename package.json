@@ -27,6 +27,6 @@
     "nodemailer": "*",
     "optimist": "*",
     "async": "*",
-    "markdown": "*"
+    "markdown-pdf": "*"
   }
 }
