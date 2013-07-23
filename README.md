@@ -1,5 +1,7 @@
 # kindle pusher ![](https://badge.fury.io/js/kindle.png)
 
+![demo](http://ww3.sinaimg.cn/large/61ff0de3gw1e6wsmhtwdgj20jv0eddh9.jpg)
+
 kindle mail-pusher based on node-pdf && nodemailer
 
 有的时候，想安安静静地在kindle上看点儿东西（比如临时性的图片或者文字片段）。但又被页面上浮躁的花花绿绿的东西所影响？这个小工具就为了这个目的而设计，你可以使用命令行把txt文件，doc，html，zip，pdf或者其他的文本文件，图像发送到你的kindle。一行命令，就是这么简单。
