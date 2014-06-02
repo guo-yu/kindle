@@ -11,7 +11,7 @@ $ [sudo] npm install kindle -g
 
 ### Setup Guide
 
-1. setup your sender's email(SMTP) via `$ kindle config sender` and follow the guider.
+1. setup your sender's email(SMTP) via `$ kindle --sender` and '$ kindle -m'.
 2. setup your sender's email be trusted in [Amazon Kindle Dashboard](#/#).
 3. push files via command line like `$ kindle mybook.pdf` to your @free.kindle.com email account.
 3. enjoy reading :)
