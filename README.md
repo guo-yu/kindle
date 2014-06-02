@@ -51,9 +51,7 @@ kindle.config('sender', {
 });
 
 // config a receiver's email
-kindle.config('receiver',{
-  email: 'my@free.kindle.com'
-});
+kindle.config('mime', 'my@free.kindle.com');
 
 // a shortcut to push files quickly,
 // by default, it will search emails be configed before.
