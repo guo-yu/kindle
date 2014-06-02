@@ -1,4 +1,4 @@
-var kindle = require('../index');
+var kindle = require('../libs/kindle');
 
 kindle.push({
   to: 'abc@abc.com',

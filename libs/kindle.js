@@ -21,3 +21,7 @@ exports.push = function(params, callback) {
     files: params.files
   }, callback);
 }
+
+exports.config = function(param, value) {
+  configs[param] = value;
+}
