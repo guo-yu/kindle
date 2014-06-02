@@ -45,13 +45,13 @@ kindle.push({
 });
 
 // config a sender's email
-kindle.configs('sender', {
+kindle.config('sender', {
   email: 'my@my.com',
   password: '123123123'
 });
 
 // config a receiver's email
-kindle.configs('receiver',{
+kindle.config('receiver',{
   email: 'my@free.kindle.com'
 });
 
