@@ -20,11 +20,11 @@ $ [sudo] npm install kindle -g
 
 config sender's email
 ```
-$ kindle config sender
+$ kindle --sender email password
 ```
 configs @free.kindle.com email
 ```
-$ kidle config receiver
+$ kindle -m email
 ```
 
 ### Example
@@ -45,13 +45,13 @@ kindle.push({
 });
 
 // config a sender's email
-kindle.config('sender', {
+kindle.configs('sender', {
   email: 'my@my.com',
   password: '123123123'
 });
 
 // config a receiver's email
-kindle.config('receiver',{
+kindle.configs('receiver',{
   email: 'my@free.kindle.com'
 });
 
