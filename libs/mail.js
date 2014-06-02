@@ -2,14 +2,6 @@ var nodemailer = require("nodemailer");
 var parser = require('./parser');
 var async = require('async');
 
-var service = {
-  qq: {
-    host: 'smtp.qq.com',
-    port: '25',
-    use_authentication: true
-  }
-}
-
 function sendMail(smtpTransport, mailOptions, callback) {
   return smtpTransport.sendMail(mailOptions, function(error, response) {
     if (!error) return callback(response);
@@ -21,12 +13,10 @@ function sendMail(smtpTransport, mailOptions, callback) {
   });
 };
 
+
 exports.send = function(params, cb) {
 
   var smtpTransport = nodemailer.createTransport("SMTP", {
-    host: service.qq.host,
-    port: service.qq.port,
-    use_authentication: service.qq.use_authentication,
     auth: {
       user: params.sender.email,
       pass: params.sender.password

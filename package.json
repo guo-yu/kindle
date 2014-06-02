@@ -30,6 +30,9 @@
     "async": "*",
     "fsplus": "*",
     "consoler": "*",
-    "nodemailer": "*"
+    "nodemailer": "*",
+    "colorful": "*",
+    "optimist": "*",
+    "markdown-pdf": "*"
   }
 }
