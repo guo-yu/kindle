@@ -1,8 +1,8 @@
 ## kindle ![npm](https://badge.fury.io/js/kindle.png)
 
-![demo](http://ww3.sinaimg.cn/large/61ff0de3gw1e6wsmhtwdgj20jv0eddh9.jpg)
-
 a command line file pusher for your kindle.
+
+![screenshot](http://ww3.sinaimg.cn/large/61ff0de3gw1e6wsmhtwdgj20jv0eddh9.jpg)
 
 ### Installation
 ```
