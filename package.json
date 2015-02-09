@@ -1,14 +1,11 @@
 {
   "name": "kindle",
-  "version": "0.0.8",
-  "description": "a mail-pusher for kindle based on node",
+  "version": "0.1.0",
+  "description": "a command line file pusher for your kindle",
   "main": "index.js",
-  "bin": "./bin/cli",
+  "bin": "bin/cli",
   "author": "turing <o.u.turing@gmail.com>",
   "license": "MIT",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/turingou/kindle"
@@ -27,9 +24,9 @@
     "url": "https://github.com/turingou/kindle/issues"
   },
   "dependencies": {
-    "async": "*",
-    "fsplus": "*",
-    "consoler": "*",
-    "nodemailer": "*"
+    "async": "^0.9.0",
+    "consoler": "^0.2.0",
+    "fsplus": "^0.1.0",
+    "nodemailer": "0.7.0"
   }
 }
