@@ -13,7 +13,7 @@ $ [sudo] npm install kindle -g
 
 1. setup your sender's email(SMTP) via `$ kindle config --user.mail` and `$ kindle config --user.password`.
 2. setup your sender's email be trusted in [Amazon Kindle Dashboard](#/#).
-3. push files via command line like `$ kindle send mybook.pdf` to your @free.kindle.com email account.
+3. push files via command line like `$ kindle send mybook.pdf` to your @kindle.com email account.
 3. enjoy reading :)
 
 ### Configs Guide
@@ -30,36 +30,47 @@ $ kindle config --kindle.mail sample@kindle.com
 ### Example
 
 ```javascript
-var kindle = require('kindle');
+'use strict'
+
+const kindle = require('../libs/kindle')
 
 kindle.push({
-  to: 'abc@abc.com',
-  from: 'a@b.com',
+  to: 'sample@kindle.com',
+  from: 'sample@mail.com',
   sender: {
-    email: 'xxx',
-    password: 'xxx'
+    email: 'sample@mail.com',
+    password: 'password'
   },
-  files: ['./my_code.txt'] // file need to be send
-}, function(err, result){
-  // do sth
-});
+  files: ['./file.mobi'] // file need to be send
+})
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})
 
 // config a sender's email
 kindle.config('sender', {
-  email: 'my@my.com',
-  password: '123123123'
-});
+  email: 'sample@mail.com',
+  password: 'pass'
+})
 
 // config a receiver's email
-kindle.config('mime', 'my@free.kindle.com');
+kindle.config('mime', 'mail@kindle.com')
 
 // a shortcut to push files quickly,
 // by default, it will search emails be configed before.
 kindle.push({
-  files: ['./my_code.txt'] // 需要发送的文件
-},function(err, result) {
-  // do sth
-});
+  files: ['./file.mobi'] // 需要发送的文件
+})
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})
+
 ```
 ### Supported File Types:
 - Microsoft Word (.DOC, .DOCX)
