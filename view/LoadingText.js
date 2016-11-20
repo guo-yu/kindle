@@ -2,18 +2,17 @@
 
 module.exports = class LoadingText {
 
-  constructor(cursor, beginText, endText) {
+  constructor(cursor, beginText) {
     this.cursor = cursor
     this.beginText = beginText
-    this.endText = endText
-
-    cursor.green()
-    cursor.write(beginText)
   }
 
   init() {
     let i = 1
     let size = this.beginText.length + 1
+
+    this.cursor.green()
+    this.cursor.write(this.beginText)
 
     this.interval = setInterval(() => {
 
@@ -25,11 +24,21 @@ module.exports = class LoadingText {
     }, 800)
   }
 
-  end()  {
+  successEnd(text)  {
     clearInterval(this.interval)
 
     this.cursor.horizontalAbsolute(0).eraseLine()
-    this.cursor.write(this.endText)
+    this.cursor.bold().write(text)
+
+    this.cursor.reset().write('\n')
+  }
+
+  errorEnd(text)  {
+    clearInterval(this.interval)
+
+    this.cursor.red()
+    this.cursor.horizontalAbsolute(0).eraseLine()
+    this.cursor.write(text)
 
     this.cursor.reset().write('\n')
   }
