@@ -110,16 +110,17 @@ module.exports = function() {
       },
 
       files: files
-    }, function(result) {
-      if (result.stat != 'error') {
-        loadingText.successEnd('The files has been successfully sent')
-        process.exit(0)
-      } else {
-        loadingText.errorEnd('Fatal error while sending the files')
-        //TODO Find a better way to output that error
-        console.log(result.error)
-        process.exit(0)
-      }
+    })
+    .then(data => {
+      loadingText.successEnd('The files has been successfully sent')
+      console.log(data)
+      process.exit(0)
+    })
+    .catch(err => {
+      loadingText.errorEnd('Fatal error while sending the files')
+      //TODO Find a better way to output that error
+      console.log(err)
+      process.exit(0)
     })
   }
 }
