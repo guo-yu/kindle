@@ -39,8 +39,12 @@ module.exports = class Print {
 
   error(error, code) {
     this.cursor.red().write(error)
-    this.cursor.write(this.separator)//.reset()
-    this.cursor.write(code)
+
+    if(code) {
+      this.cursor.write(this.separator)//.reset()
+      this.cursor.write(code)
+    }
+    
     this.cursor.write('\n').reset()
   }
 
