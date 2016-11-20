@@ -1,96 +1,146 @@
-var fs = require('fsplus');
-var path = require('path');
-var consoler = require('consoler');
-var utils = require('./utils');
-var color = require('colorful');
-var optimist = require('optimist');
-var kindle = require('./kindle');
+'use strict';
 
-var configFile = path.resolve(__dirname, '../config.json');
-var configs = fs.readJSON(configFile);
+const fs = require('fsplus');
+const path = require('path');
+const utils = require('./utils');
+const kindle = require('./kindle');
+
+const minimist = require('minimist');
+const ansi = require('ansi')
+
+const Print = require('../view/Print')
+const LoadingText = require('../view/LoadingText')
+
+let cursor = ansi(process.stdout)
+let print = new Print(cursor)
+
+let configFile = path.resolve(__dirname, '../config.json');
+let configs = fs.readJSON(configFile);
 
 module.exports = function() {
 
-  var to = '';
-  var argv = optimist.argv; 
-  var argument = argv._;
+  let argv = minimist(process.argv.slice(2))
+  let argument = argv._;
 
-  // 检查是不是设置接收邮箱
-  if (argv.m) {
-    if (utils.checkEmail(argv.m)) {
-      fs.updateJSON(configFile, {
-        mime: argv.m
-      });
-      console.log(color.green('常用kindle收件邮箱的地址已成功变更为') + color.yellow(argv.m))
-    } else {
-      console.log(color.red('你输入的邮箱地址好像不对？'))
-      return false;
-    }
-  } else if (argv.sender) {
-    if (argument.length == 1) {
-      if (utils.checkEmail(argv.sender)) {
+  //config
+  if(argument[0] === 'config') {
+
+    //Set the kindle address
+    if (argv.kindle && argv.kindle.mail) {
+
+      if (utils.checkEmail(argv.kindle.mail)) {
+
         fs.updateJSON(configFile, {
-          sender: {
-            email: argv.sender,
-            password: argument[0]
-          }
+          kindleMail: argv.kindle.mail
         });
-        console.log(color.green('恭喜，发件箱地址成功变更为') + color.yellow(argv.sender))
-      } else {
-        console.log(color.red('你输入的邮箱地址好像不对？'));
-        return false;
-      }
-    } else {
-      console.log(color.red('密码是不是输入错了？我没看到有密码哦'))
-      return false;
-    }
-  } else {
 
-    if (argv.s) {
-      if (utils.checkEmail(argv.s)) {
-        to = argv.s;
+        print.insertField('Kindle\'s address was successfully save it', argv.kindle.mail)
+
       } else {
-        console.log(color.red('你输入的邮箱地址好像不对？'))
-        return false;
-      }
-    } else {
-      if (configs.mime != 'false') {
-        to = configs.mime.toString()
-      } else {
-        console.log(color.red('抱歉，你好像没有指定kindle邮箱地址，请使用 --sender 或者 -m 设置常用地址'))
-        return false;
+        print.error('Failed to save kindle address', 'Invalid email address')
+        process.exit(1)
       }
     }
 
-    if (argument.length > 0) {
-      if (configs.sender) {
-        console.log(color.yellow('文件发送中...'));
-        var clock = setInterval(function() {
-          console.log(color.green('...'))
-        }, 800);
-        kindle.push({
-          to: to,
-          from: configs.sender.email,
-          sender: configs.sender,
-          files: argument
-        }, function(result) {
-          clearInterval(clock);
-          if (result.stat != 'error') {
-            console.log(color.green('恭喜，' + argument[0] + ' 等 ' + argument.length + ' 个文件已成功推送到您的 kindle!'));
-          } else {
-            console.log(color.red('发送失败...失败详情如下'))
-            console.log(result.error);
-            return false;
-          }
+    //Set the user mail
+    if (argv.user && argv.user.mail) {
+
+      if (utils.checkEmail(argv.user.mail)) {
+        fs.updateJSON(configFile, {
+          userMail: argv.user.mail
         });
+        print.insertField('User address was successfully save it', argv.user.mail)
       } else {
-        console.log(color.red('没有找到邮箱设置，请先设置一个发件邮箱 -> kindle --sender a@bcd.com'))
-        return false;
+        print.error('Failed to save user address', 'Invalid email address')
+        process.exit(1)
       }
-    } else {
-      console.log(color.red('话说你到底要发送哪个文件？'))
-      return false;
     }
 
+    //Set the user password
+    if(argv.user && argv.user.password) {
+      fs.updateJSON(configFile, {
+        userPassword: argv.user.password
+      });
+      print.insertField('User password was successfully save it')
+    }
+
+    process.exit(0)
+  }
+
+  if(argument[0] === 'send') {
+    print.log('Loading config file...')
+
+    if(!configs.kindleMail) {
+      print.error('Failed to load kindle address', 'Email address not found')
+      print.warning('Set the kindle address by running the command', 'kindle config --kindle.mail example@kindle.com')
+      process.exit(0)
+    }
+
+    if(!configs.userMail) {
+      print.error('Failed to load user address', 'Email address not found')
+      print.warning('Set the user address by running the command', 'kindle config --user.mail user@mail.com')
+      process.exit(0)
+    }
+
+    if(!configs.userPassword) {
+      print.error('Failed to load user password', 'User password not found')
+      print.warning('Set the user password by running the command', 'kindle config --user.password password')
+      process.exit(0)
+    }
+
+    print.successLog('The config settings were successfully loaded.')
+
+    if(argument.length === 1) {
+      print.error('Fatal error', 'There is no files to be sent')
+      process.exit(0)
+    }
+
+    let loadingText = new LoadingText(cursor, 'Sending files', 'The files were successfully sent')
+    let files = argument.slice(1)
+
+    let outputData = utils.resolveFormats(files)
+
+    if (outputData.acceptedFiles.length > 0) {
+      print.successLog('The following files will be sent:')
+      for(let file of outputData.acceptedFiles)
+        print.successLog('  * ' + file)
+
+    } else {
+      print.error('Fatal error', 'There is no files to be sent')
+      process.exit(0)
+    }
+
+    if (outputData.ignoredFiles.length > 0) {
+      print.error('The following files will be ignored:')
+      for(let file of outputData.ignoredFiles)
+        print.error('  * ' + file, 'Unsupported file')
+    }
+
+    files = outputData.acceptedFiles
+    loadingText.init()
+
+    kindle.push({
+      to: configs.kindleMail,
+      from: configs.userMail,
+
+      sender: {
+        email: configs.userMail,
+        password: configs.userPassword
+      },
+
+      files: files
+    })
+    .then(data => {
+      loadingText.successEnd('The files has been successfully sent')
+      //TODO Find a better way to output that data
+      console.log(data)
+      process.exit(0)
+    })
+    .catch(err => {
+      loadingText.errorEnd('Fatal error while sending the files')
+      //TODO Find a better way to output that error
+      console.log(err)
+      process.exit(0)
+    })
   }
 }

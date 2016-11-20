@@ -1,30 +1,40 @@
-var kindle = require('../libs/kindle');
+'use strict'
+
+const kindle = require('../libs/kindle');
 
 kindle.push({
-  to: 'abc@abc.com',
-  from: 'a@b.com',
+  to: 'mail@kindle.com',
+  from: 'sample@mail.com',
   sender: {
-    email: 'xxx',
-    password: 'xxx'
+    email: 'sample@mail.com',
+    password: 'pass'
   },
-  files: ['./my_code.txt'] // file need to be send
-}, function(err, result){
-  // do sth
-});
+  files: ['./file.mobi'] // file need to be send
+})
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})
 
 // config a sender's email
 kindle.config('sender', {
-  email: 'my@my.com',
-  password: '123123123'
-});
+  email: 'sample@mail.com',
+  password: 'pass'
+})
 
 // config a receiver's email
-kindle.config('mime', 'my@free.kindle.com');
+kindle.config('mime', 'mail@kindle.com');
 
 // a shortcut to push files quickly,
 // by default, it will search emails be configed before.
 kindle.push({
-  files: ['./my_code.txt'] // 需要发送的文件
-},function(err, result) {
-  // do sth
-});
+  files: ['./file.mobi'] // 需要发送的文件
+})
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})

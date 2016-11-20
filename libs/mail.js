@@ -1,48 +1,40 @@
-var nodemailer = require("nodemailer");
-var parser = require('./parser');
-var async = require('async');
+'use strict'
 
-function sendMail(smtpTransport, mailOptions, callback) {
-  return smtpTransport.sendMail(mailOptions, function(error, response) {
-    if (!error) return callback(response);
-    callback({
-      stat: 'error',
-      error: error
-    });
-    return smtpTransport.close();
-  });
-};
+const fs = require('fs')
+const path = require('path')
+const nodemailer = require("nodemailer");
 
+let resolveService = function(mail) {
+  let regex = /^([\w\.\-]+)\@([\w\.\-]+)\.([a-zA-Z0-9]{2,4})+$/
+  return regex.exec(mail)[2]
+}
 
-exports.send = function(params, cb) {
+module.exports = function(params) {
 
-  var smtpTransport = nodemailer.createTransport("SMTP", {
+  let smtpTransport = nodemailer.createTransport({
+    service: resolveService(params.sender.email),
     auth: {
       user: params.sender.email,
       pass: params.sender.password
     }
   });
 
-  var mailOptions = {
+  let mailOptions = {
     from: 'Kindle Pusher <' + params.from + '>',
     to: params.to,
     subject: 'kindle'
   }
 
-  function wash(file, cb) {
-    parser(file, function(result) {
-      mailOptions.attachments.push(result);
-      cb();
-    })
-  };
+  if (params.files ) {
+    mailOptions.attachments = [];
 
-  if (params.files && params.files.length > 0) {
-    mailOptions['attachments'] = [];
-    async.each(params.files, wash, function(err) {
-      if (!err) return sendMail(smtpTransport, mailOptions, cb)
-    });
-  } else {
-    sendMail(smtpTransport, mailOptions, cb)
+    for(let file of params.files) {
+      mailOptions.attachments.push({
+        filename: file,
+        content: fs.createReadStream(path.join(process.env.PWD, file))
+      })
+    }
   }
 
+  return smtpTransport.sendMail(mailOptions)
 }

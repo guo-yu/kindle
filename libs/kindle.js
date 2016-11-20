@@ -13,13 +13,13 @@ var configs = fs.readJSON(configFile);
 * @files[Array]
 *
 **/
-exports.push = function(params, callback) {
-  return mail.send({
+exports.push = function(params) {
+  return mail({
     to: params.to || configs.mime,
     from: params.from || configs.sender.email,
     sender: params.sender || configs.sender,
     files: params.files
-  }, callback);
+  });
 }
 
 exports.config = function(param, value) {
