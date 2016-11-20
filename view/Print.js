@@ -7,6 +7,17 @@ module.exports = class Print {
     this.separator = ': '
   }
 
+  log(text) {
+    this.cursor.write(text)
+    this.cursor.write('\n')
+  }
+
+  successLog(text) {
+    this.cursor.bold().green()
+    this.cursor.write(text)
+    this.cursor.reset().write('\n')
+  }
+
   insertField(description, value) {
     this.cursor.bold().green().write(description)
 
@@ -16,6 +27,14 @@ module.exports = class Print {
     }
 
     this.cursor.write('\n').reset()
+  }
+
+  warning(description, value) {
+    this.cursor.hex('#ff9800')
+    this.cursor.write(description)
+    this.cursor.write(this.separator).reset()
+    this.cursor.write(value)
+    this.cursor.write('\n')
   }
 
   error(error, code) {
