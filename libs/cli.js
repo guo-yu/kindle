@@ -98,6 +98,25 @@ module.exports = function() {
     let loadingText = new LoadingText(cursor, 'Sending files', 'The files were successfully sent')
     let files = argument.slice(1)
 
+    let outputData = utils.resolveFormats(files)
+
+    if (outputData.acceptedFiles.length > 0) {
+      print.successLog('The following files will be sent:')
+      for(let file of outputData.acceptedFiles)
+        print.successLog('  * ' + file)
+
+    } else {
+      print.error('Fatal error', 'There is no files to be sent')
+      process.exit(0)
+    }
+
+    if (outputData.ignoredFiles.length > 0) {
+      print.error('The following files will be ignored:')
+      for(let file of outputData.ignoredFiles)
+        print.error('  * ' + file, 'Unsupported file')
+    }
+
+    files = outputData.acceptedFiles
     loadingText.init()
 
     kindle.push({
@@ -113,6 +132,7 @@ module.exports = function() {
     })
     .then(data => {
       loadingText.successEnd('The files has been successfully sent')
+      //TODO Find a better way to output that data
       console.log(data)
       process.exit(0)
     })
